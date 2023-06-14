@@ -1,0 +1,114 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "pwa-msedge",
+            "name": "Launch Microsoft Edge",
+            "request": "launch",
+            "runtimeArgs": [
+                "--remote-debugging-port=9222"
+            ],
+            "url": "${workspaceFolder}/build/popup.html",
+            "presentation": {
+                "hidden": true
+            }
+        },
+        {
+            "type": "pwa-msedge",
+            "name": "Launch Microsoft Edge in headless mode",
+            "request": "launch",
+            "runtimeArgs": [
+                "--headless",
+                "--remote-debugging-port=9222"
+            ],
+            "url": "${workspaceFolder}/build/popup.html",
+            "presentation": {
+                "hidden": true
+            }
+        },
+        {
+            "name": "Attach to Microsoft Edge",
+            "type": "msedge",
+            "request": "attach",
+            "port": 9222,
+            "webRoot": "${workspaceFolder}/build/"
+        },
+        {
+            "type": "vscode-edge-devtools.debug",
+            "name": "Open Edge DevTools",
+            "request": "attach",
+            "url": "${workspaceFolder}/build/popup.html",
+            "presentation": {
+                "hidden": true
+            }
+        },
+        {
+            "name": "Launch Microsoft Edge",
+            "type": "msedge",
+            "request": "launch",
+            "url": "http://localhost:8080/popup.html",
+            "webRoot": "${workspaceFolder}/build/",
+            "sourceMaps": true,
+            "runtimeArgs": [
+                "--disable-extensions"
+            ],
+            "userDataDir": "${workspaceFolder}/.vscode/msedge",
+            "pathMapping": {
+                "/": "${workspaceFolder}/build/"
+            }
+        },
+        {
+            "name": "Launch Microsoft Edge in headless mode",
+            "type": "msedge",
+            "request": "launch",
+            "runtimeArgs": [
+                "--headless",
+                "--remote-debugging-port=9222"
+            ],
+            "url": "http://localhost:8080/popup.html",
+            "webRoot": "${workspaceFolder}/build/",
+            "sourceMaps": true,
+            "userDataDir": "${workspaceFolder}/.vscode/msedge",
+            "pathMapping": {
+                "/": "${workspaceFolder}/build/"
+            }
+        },
+        {
+            "name": "Attach to Microsoft Edge",
+            "type": "msedge",
+            "request": "attach",
+            "port": 9222,
+            "webRoot": "${workspaceFolder}/build/"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Launch Microsoft Edge and attach DevTools",
+            "configurations": [
+                "Launch Microsoft Edge",
+                "Attach to Microsoft Edge"
+            ]
+        },
+        {
+            "name": "Launch Microsoft Edge in headless mode and attach DevTools",
+            "configurations": [
+                "Launch Microsoft Edge in headless mode",
+                "Attach to Microsoft Edge"
+            ]
+        },
+        {
+            "name": "Launch Edge Headless and attach DevTools",
+            "configurations": [
+                "Launch Microsoft Edge in headless mode",
+                "Open Edge DevTools"
+            ]
+        },
+        {
+            "name": "Launch Edge and attach DevTools",
+            "configurations": [
+                "Launch Microsoft Edge",
+                "Open Edge DevTools"
+            ]
+        }
+    ]
+}
