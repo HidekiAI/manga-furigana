@@ -3,21 +3,30 @@
   "name": "Furigana OCR using Kagome v2 - manifest.json",
   "version": "1.0",
   "permissions": [
-    "nativeMessaging", "activeTab"
+    "nativeMessaging",
+    "activeTab"
   ],
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
   },
   "content_scripts": [
     {
-      "matches": ["*://*/*", 
-"<all_urls>"
-    ],
-      "js": ["content.js"]
+      "matches": [
+        "*://*/*",
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ]
     }
   ],
   "externally_connectable": {
-    "matches": ["*://*/*"]
+    "matches": [
+      "*://*/*"
+    ]
   },
   "applications": {
     "gecko": {

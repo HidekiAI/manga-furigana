@@ -1,4 +1,35 @@
 #!/bin/bash
+# arg1: fully qualified paths of your credentials (i.e. credentials.json) JSON  file paths
+
+_CREDENTIALS_FILE=$1
+_PWD=$(pwd)
+if [ x"${_CREDENTIALS_FILE}" = x"" ]; then
+    echo "Usage: $0 ${_PWD}/credentials.placeholder.json"
+    exit 1
+fi
+set -o nounset  # error when referencing undefined variable
+
+# Even though I'm asking for fully qualified path, I'm going to check for relative path...
+_CREDENTIALS_FILE=$(echo ${_CREDENTIALS_FILE} | sed "s|^\.|${_PWD}|g")
+if [ ! -e ${_CREDENTIALS_FILE} ]; then
+    echo "Error: ${_CREDENTIALS_FILE} does not exist"
+    exit 1
+fi
+
+# Look for 
+# "type": "service_account",
+# "universe_domain": "googleapis.com"
+_CRED_TYPE_VALIDATION=$(grep "type\":" ${_CREDENTIALS_FILE} | grep "service_account")
+_CRED_UD_VALIDATION=$(grep "universe_domain\":" ${_CREDENTIALS_FILE} | grep "googleapis.com")
+if [ x"${_CRED_TYPE_VALIDATION}" = x"" ]; then
+    echo "Error: ${_CREDENTIALS_FILE} does not contain \"type\": \"service_account\""
+    exit 1
+fi
+if [ x"${_CRED_UD_VALIDATION}" = x"" ]; then
+    echo "Error: ${_CREDENTIALS_FILE} does not contain \"universe_domain\": \"googleapis.com\""
+    exit 1
+fi
+
 _BUILD_DIR=/tmp/build/manga-furigana
 go get -u github.com/ikawaha/kagome/v2/...
 go get -u github.com/ikawaha/kagome/v2
@@ -15,6 +46,13 @@ if [ -e go.sum ]; then
     cp go.sum ${_BUILD_DIR}/
 fi
 cd ${_BUILD_DIR}
+touch credentials.json
+_DIFF=$(diff credentials.json ${_CREDENTIALS_FILE})
+if [ x"${_DIFF}" != x"" ]; then
+    cp credentials.json credentials.$(date +%Y-%m-%d_%H-%M-%S).bak.json
+    cat ${_CREDENTIALS_FILE} > credentials.json
+fi
+rm credentials.placeholder.json
 
 if ! [ -e /dev/shm/kagome-dict ]; then
     pushd .
@@ -32,4 +70,7 @@ if ! [ -e ubunchu01_ja ]; then
     unzip ../ubunchu01_ja.zip
 fi
 
-go build -o manga_furigana.out nativehost/main.go
+go build -o manga_furigana.out nativehost/*
+
+pwd
+ls -lAh *.out credentials.*
