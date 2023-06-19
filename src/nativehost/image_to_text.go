@@ -21,7 +21,8 @@ import (
 var visionClient *vision.ImageAnnotatorClient
 var bgContext context.Context
 
-func PerformOCR(imageFromMessage image.Image, enc *json.Encoder) (string, error) {
+// Mainly, just a proxy to the performOCR() function in which it'll encode/decode JSON from the JavaScript code (browser extension)
+func PerformOCRProxy(imageFromMessage image.Image, enc *json.Encoder) (string, error) {
 	// Resize the image to a smaller size to speed up processing
 	scaledAndGreyScaledImage := imaging.Resize(imageFromMessage, 800, 0, imaging.Lanczos)
 
@@ -32,7 +33,7 @@ func PerformOCR(imageFromMessage image.Image, enc *json.Encoder) (string, error)
 	scaledAndGreyScaledImage = imaging.AdjustContrast(scaledAndGreyScaledImage, 20) // as a starter, adjust the contrast to +20%
 
 	// Process the image
-	tokenizedText, err := performOCR(scaledAndGreyScaledImage, enc)
+	tokenizedText, err := PerformOCR(scaledAndGreyScaledImage)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		return "", err
@@ -50,7 +51,7 @@ func PerformOCR(imageFromMessage image.Image, enc *json.Encoder) (string, error)
 }
 
 // Implement the logic to call Google Cloud Vision OCR API and extract the Japanese text from the image URL
-func performOCR(img image.Image, enc *json.Encoder) ([]string, error) {
+func PerformOCR(img image.Image) ([]string, error) {
 	// let's make sure initOCR() was called
 	if visionClient == nil || bgContext == nil {
 		// fail gracefully, but inform the caller that initOCR() needs to be called in the error message
@@ -93,7 +94,8 @@ func performOCR(img image.Image, enc *json.Encoder) ([]string, error) {
 	return texts, nil
 }
 
-func initOCR(pathToCredentials_json string) error {
+func InitOCR(pathToCredentials_json string) error {
+	var err error
 	// Initialize the Google Cloud Vision API client
 	// Set up a context and create a new client
 	bgContext = context.Background()

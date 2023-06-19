@@ -60,7 +60,7 @@ func doBackground() {
 
 func TokenizeImage(img image.Image, enc *json.Encoder) (string, []Token, error) {
 	// first, scan for Japanese text in the image using OCR
-	textsPerImage, err := PerformOCR(img, enc)
+	textsPerImage, err := PerformOCRProxy(img, enc)
 	if err != nil {
 		return "", nil, err
 	}
@@ -73,6 +73,6 @@ func TokenizeImage(img image.Image, enc *json.Encoder) (string, []Token, error) 
 
 	return tokenizedText, tokens, nil
 }
-func initBackground() error {
+func InitBackground() error {
 	return nil
 }

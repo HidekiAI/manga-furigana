@@ -1,21 +1,27 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Furigana OCR using Kagome v2 - manifest.json",
-  "version": "1.0",
+  "version": "0.0.0.1",
+  "description": "This is my Go extension",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_icon": "icon48.png",
+    "default_popup": "popup.html"
+  },
   "permissions": [
     "nativeMessaging",
     "activeTab"
   ],
   "background": {
-    "scripts": [
-      "background.js"
-    ],
-    "persistent": false
+    "service_worker": "background.js"
   },
   "content_scripts": [
     {
       "matches": [
-        "*://*/*",
         "<all_urls>"
       ],
       "js": [
@@ -23,15 +29,6 @@
       ]
     }
   ],
-  "externally_connectable": {
-    "matches": [
-      "*://*/*"
-    ]
-  },
-  "applications": {
-    "gecko": {
-      "id": "manga-furigana@codemonkeyninja.dev",
-      "strict_min_version": "42.0"
-    }
-  }
+  "options_page": "options.html",
+  "default_locale": "en"
 }

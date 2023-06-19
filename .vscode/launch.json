@@ -3,35 +3,35 @@
     "configurations": [
         {
             "type": "pwa-msedge",
-            "name": "Launch Microsoft Edge",
+            "name": "Launch Microsoft Edge (/tmp/build)",
             "request": "launch",
             "runtimeArgs": [
                 "--remote-debugging-port=9222"
             ],
-            "url": "${workspaceFolder}/build/popup.html",
+            "url": "/tmp/build/manga-furigana/popup.html",
             "presentation": {
                 "hidden": true
             }
         },
         {
             "type": "pwa-msedge",
-            "name": "Launch Microsoft Edge in headless mode",
+            "name": "Launch Microsoft Edge in headless mode (/tmp/build)",
             "request": "launch",
             "runtimeArgs": [
                 "--headless",
                 "--remote-debugging-port=9222"
             ],
-            "url": "${workspaceFolder}/build/popup.html",
+            "url": "/tmp/build/manga-furigana/popup.html",
             "presentation": {
                 "hidden": true
             }
         },
         {
-            "name": "Attach to Microsoft Edge",
+            "name": "Attach to Microsoft Edge  (/tmp/build)",
             "type": "msedge",
             "request": "attach",
             "port": 9222,
-            "webRoot": "${workspaceFolder}/build/"
+            "webRoot": "/tmp/build/manga-furigana/"
         },
         {
             "type": "vscode-edge-devtools.debug",
@@ -74,7 +74,7 @@
             }
         },
         {
-            "name": "Attach to Microsoft Edge",
+            "name": "Attach to Microsoft Edge (${workspaceFolder}/build)",
             "type": "msedge",
             "request": "attach",
             "port": 9222,

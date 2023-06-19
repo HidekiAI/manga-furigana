@@ -70,7 +70,20 @@ if ! [ -e ubunchu01_ja ]; then
     unzip ../ubunchu01_ja.zip
 fi
 
-go build -o manga_furigana.out nativehost/*
+go build -o manga_furigana.out nativehost/*.go
 
 pwd
 ls -lAh *.out credentials.*
+
+# now unit-test, note that because the BINARY version as well as Main.go calls the private function init() which expects the
+# credentials.json file to exist, we need to create a copy in the current directory as well
+echo "# now unit-test"
+# copy it for the init() usage
+cp credentials.json nativehost/
+cp ipa.dict nativehost/
+cd nativehost
+go test -v ./...
+# make sure we only have one copy of credentials.json by removing this temp duplicate...
+rm credentials.json
+rm ipa.dict
+cd .. 

@@ -1,8 +1,5 @@
 {
-    <!-- 
-        // Once "Load unpacked" (from the build directory), open a terminal in "chrome" and run the following command: 
-        //  'chrome-native-messaging-hosts manga-furigana.json' 
-    -->
+    "_comment": " Once 'Load unpacked' (from the build directory), open a terminal in 'chrome' and run the following command: 'chrome-native-messaging-hosts manga-furigana.json' ",
     "name": "manga-furigana.codemonkeyninja.dev",
     "description": "Native messaging host for Japanese OCR Extension",
     "path": "manga-furigana.exe",

@@ -35,15 +35,15 @@ func init() {
 		}
 	}
 
-	errbg := initBackground()
+	errbg := InitBackground()
 	if errbg != nil {
 		fmt.Println("Failed to initialize background:", errbg.Error())
 	}
-	errtkn := initTokenizer()
+	errtkn := InitTokenizer("./")
 	if errtkn != nil {
 		fmt.Println("Failed to initialize tokenizer:", errtkn.Error())
 	}
-	errocr := initOCR("./credentials.json")
+	errocr := InitOCR("./credentials.json")
 	if errocr != nil {
 		fmt.Println("Failed to initialize OCR:", errocr.Error())
 	}
