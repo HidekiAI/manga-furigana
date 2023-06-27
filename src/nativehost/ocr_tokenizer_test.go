@@ -83,7 +83,7 @@ func TestTokenizeText(t *testing.T) {
 func TestOCR(t *testing.T) {
 	// NOTE: Calling InitOCR() here is redundant, since init() (private one) already calls it, but it's here for completeness
 	// NOTE: Assume we're inside "NativeHost" directory, so reference files one directory up via "../"
-	errocr := InitOCR("../credentials.json") // NOTE: Init() expects the path to the credentials file to be on SAME directory as the binary wher init() gets called
+	errocr := InitOCR()
 	if errocr != nil {
 		t.Errorf("Failed to initialize OCR: %v", errocr)
 	}

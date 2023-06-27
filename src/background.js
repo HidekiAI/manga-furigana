@@ -3,6 +3,30 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function scanImages() {
+    chrome.identity.getAuthToken({ 'interactive': true }, function (token) {
+        // Use the access token to authenticate requests to the Google Cloud Vision API
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://vision.googleapis.com/v1/images:annotate');
+        xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function () {
+            // Handle the response
+        };
+        xhr.send(JSON.stringify(request));
+    });
+
+    chrome.identity.getAuthToken({ interactive: true }, function (token) {
+        // Use the token to authenticate requests to the Google Cloud Vision API
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://vision.googleapis.com/v1/images:annotate');
+        xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function () {
+            // Handle the response
+        };
+        xhr.send(JSON.stringify(request));
+    });
+
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         // get ID of the current tab that is in focus
         const currentTab = tabs.findIndex(tab => tab.active);

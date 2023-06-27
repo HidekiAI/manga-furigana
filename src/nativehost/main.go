@@ -43,7 +43,7 @@ func init() {
 	if errtkn != nil {
 		fmt.Println("Failed to initialize tokenizer:", errtkn.Error())
 	}
-	errocr := InitOCR("./credentials.json")
+	errocr := InitOCR()
 	if errocr != nil {
 		fmt.Println("Failed to initialize OCR:", errocr.Error())
 	}

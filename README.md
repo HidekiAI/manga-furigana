@@ -1,25 +1,38 @@
-# manga-furigana
-OCR-based real-time dynamic furigana for manga plugin to Chromium/MSEdge
+# manga-furigana: ocr-based real-time dynamic furigana for manga plugin to chromium/msedge
 
+This is a Chrome extension that uses the Google Cloud Vision API to perform OCR on manga images and display furigana (Japanese pronunciation guides) in real-time.
 
-## Setup (Goole Cloud Vision API), build, and attach to Chromium/MSEdge
+## Prerequisites
+
+Before you can use this extension, you will need to set up a Google Cloud Vision API project and obtain a service account key file in JSON format. Here are the general steps to do this:
+
 1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
-2. Select your project from the dropdown menu at the top of the page.
-3. Click on the navigation menu icon in the top-left corner of the page and select "APIs & Services" > "Credentials".
-4. Click on the "Create credentials" button and select "Service account key".
-5. Select "New service account" and enter a name for the service account.
-6. You'll note a "KEYS" tab at the top center, in which you'd click that tab and select "ADD KEY" > "Create new key" 
-7. Select "JSON" as the key type and click on the "Create" button.
-8. Dialog box with "Private key saved to your computer" will appear, in which you should most likely be prompted to download the JSON file, name the JSON file to `credentials.placeholder.json` and place it in the `manga-furigana` (src) directory.
-   a. TODO: In future, switch over to "Workload Identity Federation" to avoid having to download the JSON file.
-   b. Go to "APIs & Services" > "Library" and search for "Cloud Vision API", click on the result and click on the "Enable" button.
-   c. Probably a good idea to go to "APIs & Services" > "Dashboard" and click on the "Enable APIs and Services" button and enable "Compute Engine API" as well.
-9. Run the "build.sh" bash script to build the project.
-10. Copy the built folder (/tmp/build/manga-furigana) to some persistent directory (e.g. /opt/manga-furigana).
-11. Assuming Chrome/MSEdge is set to allow Developer extensions, go to the extensions page (chrome://extensions/ or edge://extensions/), enable Developer mode, and click on "Load unpacked" and select the directory from step 11.
-12. The extension should now be loaded and ready to use.
+2. Create a new project or select an existing project.
+3. Enable the Google Cloud Vision API for your project.
+4. Create a service account for your project and download the service account key file in JSON format.
+5. Store the service account key file in a secure location, such as a private repository or a secure file storage service, and restrict access to the file to only those users who need it.
+
+TODO: Determine if we need to export the account key (JSON) file (steps 4 and 5 above) since we'll be using the Google Identity API to obtain an OAuth2 access token for the Google Cloud Vision API.  If we do need to export the account key (JSON) file, then probably, we'll need to create a proxy server that will do server-to-server and on that server, the configuration key JSON file will only reside (privately).  And then, have client-to-server communication (browser-to-server) to get the access token.  This way, the configuration key JSON file will not be exposed to the client (browser).  The proxy server will be the one to communicate with the Google Cloud Vision API.  The client (browser) will only communicate with the proxy server.  The proxy server will be the one to communicate with the Google Cloud Vision API.  The client (browser) will only communicate with the proxy server.  The proxy server will be the one to communicate with the Google Cloud Vision API.  The client (browser) will only communicate with the proxy server.  The proxy server will be the one to communicate with the Google Cloud Vision API.  The client (browser) will only communicate with the proxy server.  The proxy server will be the one to communicate with the Google Cloud Vision API.  The client (browser) will only communicate with the proxy server.  The proxy server will be the one to communicate with the Google Cloud Vision API.  The client (browser) will only communicate with the proxy server.  The proxy server will be the one to communicate with the Google Cloud Vision API.  The client (browser) will only communicate with the proxy server.  The proxy server will be the one to communicate with the Google Cloud Vision API.  The client (browser) will only communicate with the proxy server.
+
+## Authentications (behind the scene)
+
+When using the Google Identity API to obtain an OAuth2 access token for the Google Cloud Vision API, the user will be prompted to sign in to their Google account if they are not already signed in. The user will then be prompted to grant permission to the extension to access the Google Cloud Vision API using the OAuth2 scopes that were specified in the `manifest.json` file.
+
+The user's Google account does not need to be the same account that was used to create the Google Cloud Vision API project. However, the user must have permission to access the Google Cloud Vision API using the OAuth2 scopes that were specified in the `manifest.json` file.
+
+When the user grants permission to the extension to access the Google Cloud Vision API, an OAuth2 access token will be obtained for the user's Google account. This access token can then be used to authenticate requests to the Google Cloud Vision API on behalf of the user.
+
+So, in summary, the user does not need to indicate that the Google account they created the project on is the account they need to log in with. They simply need to sign in to their Google account and grant permission to the extension to access the Google Cloud Vision API using the OAuth2 scopes that were specified in the `manifest.json` file.  This way, if you want your friends and family to use your Google Cloud Vision Service, you can simply share the extension with them and they can sign in to their own Google account and grant permission to the extension to access the Google Cloud Vision API using the OAuth2 scopes that were specified in the `manifest.json` file, and will be charged only to single Google Cloud Vision API project (billings).  You can also set the ceiling amount in the billings so that if your friends and family abuse the service, you will not be charged more than the ceiling amount.
 
 
-* These steps are wrong for the purpose of browser extensions, the above methods are  for the purpose of getting authentications between service-to-service (S2S) and security-wise, it's a very bad idea.  The correct way to do this is to integrate it via client-to-service (C2S) method in which is done via OAuth2.
-* Revise the steps above to use OAuth2 instead of S2S.
 
+## Usage
+
+To use this extension, simply install it in your Chrome or Microsoft Edge browser and navigate to a page with manga images. The extension will automatically detect the manga images and display furigana in real-time.
+
+
+
+
+## License
+
+This extension is licensed under the MIT License. See the `LICENSE` file for details.

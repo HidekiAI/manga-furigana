@@ -11,11 +11,15 @@ import (
 
 	visionpb "cloud.google.com/go/vision/v2/apiv1/visionpb"
 	"github.com/disintegration/imaging"
-	"google.golang.org/api/option"
-	"google.golang.org/api/transport"
 
 	// import google cloud vision package
 	vision "cloud.google.com/go/vision/apiv1"
+	"golang.org/x/oauth2"
+
+	// google-auth-library-go package
+	"google.golang.org/api/option"
+	"google.golang.org/api/transport"
+	"google.golang.org/grpc/metadata"
 )
 
 var visionClient *vision.ImageAnnotatorClient
@@ -94,21 +98,38 @@ func PerformOCR(img image.Image) ([]string, error) {
 	return texts, nil
 }
 
-func InitOCR(pathToCredentials_json string) error {
-	var err error
-	// Initialize the Google Cloud Vision API client
-	// Set up a context and create a new client
-	bgContext = context.Background()
-	// Create a new Google Cloud Vision client
-	creds, err := transport.Creds(bgContext, option.WithCredentialsFile(pathToCredentials_json))
+func createVisionClient(token string) (*vision.ImageAnnotatorClient, error) {
+	// Create a context and set the token as a header
+	ctx := context.Background()
+	header := fmt.Sprintf("Bearer %s", token)
+	ctx = metadata.AppendToOutgoingContext(ctx, "Authorization", header)
+
+	// Create an oauth2.TokenSource with the token
+	ts := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: token},
+	)
+
+	// Create an option.ClientOption with the oauth2.TokenSource
+	clientOption := option.WithTokenSource(ts)
+
+	// Create a transport with the clientOption
+	httpClient, _, err := transport.NewHTTPClient(ctx, clientOption)
 	if err != nil {
-		fmt.Printf("failed to load credentials for '%s': %v\n", pathToCredentials_json, err)
-		os.Exit(1)
+		return nil, err
 	}
-	visionClient, err = vision.NewImageAnnotatorClient(bgContext, option.WithCredentials(creds))
+
+	// Create a vision.ImageAnnotatorClient with the transport
+	visionClient, err := vision.NewImageAnnotatorClient(ctx, clientOption, option.WithHTTPClient(httpClient))
 	if err != nil {
-		fmt.Println("failed to create Vision client:", err)
-		return fmt.Errorf("failed to create Vision client: %v", err)
+		return nil, err
 	}
+	return visionClient, nil
+}
+
+// NOTE: Because this is client-to-server, we need to use OAuth2 to authenticate the client
+// rather than using a service account key file (which is used for server-to-server)
+func InitOCR() error {
+	// Use the chrome.identity.getAuthToken() function to obtain an OAuth2 access token (this is a client-to-server)
+	// based chrome extension, so we need to use OAuth2 to authenticate the client
 	return nil
 }
