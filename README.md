@@ -6,13 +6,25 @@ This is a Chrome extension that uses the Google Cloud Vision API to perform OCR 
 
 Before you can use this extension, you will need to set up a Google Cloud Vision API project and obtain a service account key file in JSON format. Here are the general steps to do this:
 
+GitHub Copilot: The `client_id` parameter is a required parameter that you need to pass to the OAuth 2.0 authorization endpoint when using the `chrome.identity.launchWebAuthFlow` method to obtain an access token.
+
+To obtain a `client_id` for your application, you need to create a project in the Google Cloud Console and enable the Google Cloud Vision API. Once you have created a project and enabled the API, you can create a new OAuth 2.0 client ID in the Google Cloud Console and obtain a `client_id` to use in your application.
+
+Here are the steps to obtain a `client_id` for your application:
+
 1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
 2. Create a new project or select an existing project.
 3. Enable the Google Cloud Vision API for your project.
-4. Create a service account for your project and download the service account key file in JSON format.
-5. Store the service account key file in a secure location, such as a private repository or a secure file storage service, and restrict access to the file to only those users who need it.
+4. Go to the [Credentials page](https://console.cloud.google.com/apis/credentials) in the Google Cloud Console.
+5. Click the "Create credentials" button and select "OAuth client ID".
+6. Select "Web application" as the application type.
+7. Enter a name for your OAuth 2.0 client ID.
+8. Enter the authorized JavaScript origins and redirect URIs for your application.
+9. Click the "Create" button to create the OAuth 2.0 client ID.
+10. Copy the `client_id` value from the "OAuth 2.0 client IDs" section of the Credentials page.
 
-TODO: Determine if we need to export the account key (JSON) file (steps 4 and 5 above) since we'll be using the Google Identity API to obtain an OAuth2 access token for the Google Cloud Vision API.  If we do need to export the account key (JSON) file, then probably, we'll need to create a proxy server that will do server-to-server and on that server, the configuration key JSON file will only reside (privately).  And then, have client-to-server communication (browser-to-server) to get the access token.  This way, the configuration key JSON file will not be exposed to the client (browser).  The proxy server will be the one to communicate with the Google Cloud Vision API.  The client (browser) will only communicate with the proxy server.  The proxy server will be the one to communicate with the Google Cloud Vision API.  The client (browser) will only communicate with the proxy server.  The proxy server will be the one to communicate with the Google Cloud Vision API.  The client (browser) will only communicate with the proxy server.  The proxy server will be the one to communicate with the Google Cloud Vision API.  The client (browser) will only communicate with the proxy server.  The proxy server will be the one to communicate with the Google Cloud Vision API.  The client (browser) will only communicate with the proxy server.  The proxy server will be the one to communicate with the Google Cloud Vision API.  The client (browser) will only communicate with the proxy server.  The proxy server will be the one to communicate with the Google Cloud Vision API.  The client (browser) will only communicate with the proxy server.  The proxy server will be the one to communicate with the Google Cloud Vision API.  The client (browser) will only communicate with the proxy server.
+Once you have obtained a `client_id`, you can use it in your application by passing it as a parameter to the `chrome.identity.launchWebAuthFlow` method.
+
 
 ## Authentications (behind the scene)
 
